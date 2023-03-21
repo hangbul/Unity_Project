@@ -6,14 +6,16 @@ TagManager:
   tags:
   - Body
   - Bomb
+  - FxTemporaire
+  - Target
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - Player
   - Water
   - UI
-  - 
+  - Bomb
   - 
   - 
   - 

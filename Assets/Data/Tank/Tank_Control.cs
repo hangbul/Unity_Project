@@ -4,37 +4,42 @@ using UnityEngine;
 
 public class Tank_Control : MonoBehaviour
 {
-    
+    public bool isFireReady = true;
     public float Speed = 1.0f;
     public float DegreeSpeed = 1.0f;
     public float dy = 1.0f;
     public float _rotate_limit;
 
+    public int count = 0;
+
     public Bomb _bomb;
 
     public Transform _Cannon_Barrel = null;
     public Transform _Head = null;
-    public Transform _point = null;
+    public Transform[] _point = null;
 
     public GameObject orgBomb = null;
+    public GameObject _effect = null;
+    public float Fire_Delay_time = 1.5f;
 
     void Start()
     {
-        
+
     }
     //콜라이더 무게
     // sphere , box , mesh
     // RigidBody. kinemetic = 나 의외의 대상에게만 물리 연산, 자신은 연산 제외
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) && isFireReady)
         {
             _bomb.OnFire();
             _bomb = null;
-            GameObject obj = Instantiate(orgBomb, _point);
+            GameObject obj = Instantiate(orgBomb, _point[count]);
             obj.transform.localPosition = Vector3.zero;
-            obj.transform.localRotation= _point.localRotation; ;
+            obj.transform.localRotation= _point[count].localRotation; ;
             _bomb = obj.GetComponent<Bomb>();
+            StartCoroutine(EffectPlay());
 
         }
 
@@ -95,5 +100,17 @@ public class Tank_Control : MonoBehaviour
          */
 
         _Cannon_Barrel.localRotation = Quaternion.Euler(angle);
+    }
+    IEnumerator EffectPlay()
+    {
+        isFireReady = false;
+
+        GameObject obj = Instantiate(_effect, _point[count].position, Quaternion.identity);
+        yield return new WaitForSeconds(Fire_Delay_time);
+        isFireReady = true;
+        count++;
+        if (count >= _point.Length)
+            count = 0;
+        Destroy(obj);
     }
 }

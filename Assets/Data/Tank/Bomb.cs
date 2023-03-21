@@ -4,12 +4,13 @@ using UnityEngine;
 
 public class Bomb : MonoBehaviour
 {
-    public bool isFire = false;
-    private List<GameObject> target;
+    public bool isFire = false, isQuitting = false;
+    public List<GameObject> target;
+    public GameObject _effect;
 
     public float life_time = 5.0f;
     float speed = 10.0f;
-
+    Vector3 hit_point;
     void Start()
     {
         this.isFire = false;
@@ -22,22 +23,43 @@ public class Bomb : MonoBehaviour
     }
     // 유니티 전체 중 안에 Resources 란 동일 명칭의 폴더가 root에 있는 Resources로 뭉쳐진다.
     // 뿐만 아니라 빌드 시 미사용되는 파일도 사용될 수 도 있다.
-    
+
 
     // 엔진 업글 시 앞으로 사용하지 않는 함수가 있음
-
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
     // Update is called once per frame
     void Update()
     {
         if (isFire)
         {
-            this.transform.Translate(Vector3.forward * speed * Time.deltaTime);
+            float delta = speed * Time.deltaTime;
+
+            Ray ray = new Ray();
+
+            ray.origin = transform.position;
+            ray.direction = transform.forward;
+            if( Physics.Raycast(ray, out RaycastHit hit, delta))
+            {
+                DestroyObject(hit.transform.gameObject);
+            }
+                
+            this.transform.Translate(Vector3.forward * delta);
             life_time -= Time.deltaTime;
             if (life_time < 0)
                 Destroy(this.gameObject);
         }
 
         
+    }
+    private void OnDestroy() //이벤트 함수 중 1 : 파괴될 때 실행
+    {
+        if (!isQuitting)
+        {
+            GameObject obj = Instantiate(_effect, this.transform.position, Quaternion.identity); return;
+        }
     }
 
     public void OnFire()
@@ -47,24 +69,30 @@ public class Bomb : MonoBehaviour
         this.GetComponent<Collider>().isTrigger = false;
     }
 
+    void DestroyObject(GameObject obj)
+    {
+        if (obj.tag == "Bomb" || obj.tag == "Player") return;
+
+        Destroy(obj);
+        StartCoroutine(CreateTarget());
+    }
+
     private void OnCollisionEnter(Collision other)
     {
         Debug.Log("CollisionEnter");
-        if (other.gameObject.tag == "Bomb") return;
-        
-        Vector3 tmp = other.transform.position;
+        DestroyObject(other.gameObject);
 
-        Destroy(other.gameObject);
-        tmp.x = Random.Range(-8.0f, 8.0f);
-
-        Vector3 _randPoint = tmp;
-        GameObject obj = Instantiate(target[Random.Range(0, target.Count)]);
+    }
+    IEnumerator CreateTarget()
+    {
+        this.GetComponent<Collider>().isTrigger = true;
+        yield return new WaitForSeconds(0.1f);
         
 
         Destroy(this.gameObject);
 
-
     }
+
     private void OnCollisionStay(Collision other)
     {
         Debug.Log("CollisionStay");
@@ -88,5 +116,7 @@ public class Bomb : MonoBehaviour
     {
         Debug.Log("TriigerExit");
     }
+
+    
 
 }
