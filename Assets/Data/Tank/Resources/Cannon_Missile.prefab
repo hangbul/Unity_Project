@@ -111,7 +111,7 @@ Transform:
   m_GameObject: {fileID: 3100223664371077373}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 0.58457, y: 0.58457, z: 0.58457}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1474913443395801317}
@@ -132,10 +132,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   isFire: 0
-  target:
-  - {fileID: 3624859318700893786, guid: 60a8b2c1c0a86c646a60e4ae5e4d99b6, type: 3}
-  - {fileID: 8356770180241510765, guid: eb39f0f34b6325341a1c72676606a9d9, type: 3}
-  - {fileID: 5143160865327132988, guid: 842bc65c130b06f47855499b376a9309, type: 3}
+  life_time: 5
 --- !u!54 &532428625093996971
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -160,7 +157,7 @@ SphereCollider:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3100223664371077373}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Radius: 0.13

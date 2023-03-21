@@ -60,6 +60,12 @@ public class Tank_Control : MonoBehaviour
             transform.Rotate(Vector3.up * DegreeSpeed * Time.deltaTime);
         }
 
+        if (Input.GetKey(KeyCode.R))
+        {
+            transform.position = Vector3.zero + new Vector3(0, 3.0f, 0);
+            transform.rotation = Quaternion.Euler(Vector3.zero);
+        }
+
 
         if (Input.GetKey(KeyCode.LeftArrow))
             _Head.Rotate(Vector3.up * DegreeSpeed * Time.deltaTime * -1);
