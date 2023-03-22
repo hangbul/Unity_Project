@@ -1,12 +1,20 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Unity.VisualScripting;
+using UnityEditor.Experimental.GraphView;
+using UnityEditor.UIElements;
 
 public class RandomRotator : MonoBehaviour
 {
     [SerializeField]
     private float tumble;
-    private GameObject _Earth;
 
+
+    public GameObject _effect;
+    private GameObject _Earth;
+    
+    
+    private bool isQuitting = false;
     float Velocity = 0.2f;
     Vector3 targetPos;
 
@@ -46,5 +54,18 @@ public class RandomRotator : MonoBehaviour
             yield return null;
         }
     }
+    private void OnApplicationQuit()
+    {
+        isQuitting = true;
+    }
+    
+    private void OnDestroy() //이벤트 함수 중 1 : 파괴될 때 실행
+    {
+        if (!isQuitting)
+        {
+            GameObject obj = Instantiate(_effect, this.transform.position, Quaternion.identity); return;
+        }
+    }
 
+    
 }

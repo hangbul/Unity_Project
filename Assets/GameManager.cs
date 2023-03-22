@@ -42,6 +42,11 @@ public class GameManager : MonoBehaviour
 
         }
 
+        if (Earth == null && Spawning)
+        {
+            Spawning = false;
+        }
+
 
 
     }
