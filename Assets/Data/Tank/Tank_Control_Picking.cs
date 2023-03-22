@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Tank_Control_Picking : MonoBehaviour
 {
+    public LayerMask pickMask;
+    public LayerMask enemyMask;
+
     public bool isFireReady = true, isMoving = false;
-    public float Speed = 1.0f;
+    public float MoveSpeed = 10.0f;
+    public float Velocity = 5.0f;
+    public float RotVelocity = 360.0f;
+
     public float DegreeSpeed = 1.0f;
     public float dy = 1.0f;
     public float _rotate_limit;
 
-    public float dt = 0.0f;
-
+    public float dest_dt = 0.0f;
     public int count = 0;
 
     public Bomb _bomb;
@@ -20,34 +25,45 @@ public class Tank_Control_Picking : MonoBehaviour
     public Transform _Head = null;
     public Transform[] _point = null;
 
+    Vector3 targetPos;
+    Vector3 targetRot;
+
     public Camera main_cam;
     public GameObject orgBomb = null;
     public GameObject _effect = null;
+    public GameObject point = null;
     public float Fire_Delay_time = 1.5f;
 
-    public Vector3 startPos, destPos, target_rotate;
     void Start()
     {
-        startPos = destPos = transform.position;
-
-        StartCoroutine(Moving());
+        targetPos = transform.position;
+        targetRot = transform.rotation.eulerAngles;
     }
 
     void Update()
     {
         if (Input.GetMouseButtonDown(0))
         {
+
             Ray ray = main_cam.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out RaycastHit hit))
+            if (Physics.Raycast(ray, out RaycastHit hit, Mathf.Infinity, pickMask))
             {
-                dt = 0.0f;
-                isMoving = true;
-                startPos = transform.position;
-                destPos = hit.point;
-                target_rotate = destPos - startPos;
-                StartCoroutine(Moving());
+
+                if (((1 << hit.transform.gameObject.layer) & enemyMask) == 0)
+                {
+                    Vector3 dir = hit.point - transform.position;
+
+                    StopAllCoroutines();
+
+                    StartCoroutine(Moving(dir));
+                    StartCoroutine(Rotating(dir));
+
+                }
             }
         }
+   
+        transform.position = Vector3.Lerp(transform.position, targetPos, Velocity * Time.deltaTime);
+        transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.Euler(targetRot), RotVelocity * Time.deltaTime);
 
         if (Input.GetKeyDown(KeyCode.Space) && isFireReady)
         {
@@ -96,20 +112,62 @@ public class Tank_Control_Picking : MonoBehaviour
             count = 0;
         Destroy(obj);
     }
-    IEnumerator Moving()
+
+    IEnumerator Moving(Vector3 dir)
     {
-        while (isMoving)
+        float dist = dir.magnitude; //Vector3.Distance(pos, trasform.position);
+        dir.Normalize();        // normalized
+
+        
+
+        while (dist > 0.0f)
         {
-            dt = Mathf.Clamp(dt + Time.deltaTime, 0.0f, 20.0f);
-            float curr_range = Vector3.Distance(transform.position, destPos);
-
-            //Approximately 근삿값 비교
-            if (Mathf.Approximately(dt, 20.0f) || curr_range == 0)
-                isMoving = false;
-
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(target_rotate), dt);
-            transform.position = Vector3.Lerp(startPos, destPos, dt);
+            float delta = 2.0f * Time.deltaTime;        //length
             
+            if(dist - delta < 0.0f)
+                delta = dist;
+
+            //transform.Translate(dir * delta * MoveSpeed, Space.World);
+            targetPos += dir * delta;
+
+            dist -= delta;
+
+
+            yield return null;
+        }
+    }
+    IEnumerator Rotating(Vector3 dir)
+    {
+        //유니티 함수 제공
+        {
+            /*
+            //내적시 정규화 필요
+            float d = Vector3.Dot(transform.forward, dir);
+
+            float radian = Mathf.Acos(d);       //라디안 값
+                                                // y : 180도  = x : pi
+                                                // y = 180도 * (radian / pi)
+            float angle = 180.0f * radian / Mathf.PI;
+             */
+        }
+        dir.Normalize();        // normalized
+        float angle = Vector3.Angle(transform.forward, dir);
+
+        float rotdir = 1.0f;
+        if (Vector3.Dot(transform.right, dir) < 0)
+            rotdir = -1.0f;
+        
+        //transform.Rotate(Vector3.up * angle * rotdir);
+        while (angle > 0.0f)
+        {
+            float delta = RotVelocity * Time.deltaTime;
+            if (angle - delta < 0.0f)
+                delta = angle;
+
+            //targetRot.Rotate(Vector3.up * rotdir * delta);
+            targetRot.y += delta * rotdir;
+            angle -= delta;
+
             yield return null;
         }
     }
