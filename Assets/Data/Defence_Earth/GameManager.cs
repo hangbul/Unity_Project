@@ -9,7 +9,7 @@ public class GameManager : MonoBehaviour
     public LayerMask enemyMask;
 
     public GameObject[] Ori_Asteroid;
-    GameObject Earth;
+    
 
     public float spawn_Max_Distance = 20.0f;
     public float spawn_Min_Distance = 15.0f;
@@ -20,13 +20,12 @@ public class GameManager : MonoBehaviour
     public Camera _main_cam;
     void Start()
     {
-        Earth = GameObject.Find("Earth");
         StartCoroutine(Spawn_Asteroid());
     }
 
     void Update()
     {
-        spawn_Distance = Mathf.Clamp(spawn_Distance * Mathf.Sin(Time.deltaTime), spawn_Min_Distance, spawn_Max_Distance);
+        spawn_Distance = Mathf.Clamp(spawn_Distance * Mathf.Sin(Time.deltaTime* circle_num), spawn_Min_Distance, spawn_Max_Distance);
 
         if (Input.GetMouseButtonDown(0))
         {
@@ -42,7 +41,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (Earth == null && Spawning)
+        if (Earth._myEarth == null && Spawning)
         {
             Spawning = false;
         }
@@ -56,7 +55,6 @@ public class GameManager : MonoBehaviour
         while (Spawning)
         {
             int rnd = Random.Range(0, 3);
-            
 
             Vector3 _point = new Vector3(Mathf.Cos(Mathf.PI * Time.deltaTime * circle_num) , 0, Mathf.Sin(Mathf.PI * Time.deltaTime * circle_num) ) * spawn_Distance;
             GameObject obj = Instantiate(Ori_Asteroid[rnd]);

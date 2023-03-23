@@ -6,12 +6,17 @@ using UnityEngine;
 
 public class Earth : MonoBehaviour
 {
-
+    public static Earth _myEarth = null;
     public float rotSpeed = 10.0f;
     public GameObject _effect = null;
     
     private bool isQuitting = false;
-    
+
+    private void Start()
+    {
+        _myEarth = this;
+    }
+
     // Update is called once per frame
     void Update()
     {

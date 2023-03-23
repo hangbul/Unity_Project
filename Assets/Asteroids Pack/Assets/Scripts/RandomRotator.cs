@@ -9,10 +9,7 @@ public class RandomRotator : MonoBehaviour
     [SerializeField]
     private float tumble;
 
-
     public GameObject _effect;
-    private GameObject _Earth;
-    
     
     private bool isQuitting = false;
     float Velocity = 0.2f;
@@ -21,8 +18,9 @@ public class RandomRotator : MonoBehaviour
     void Start()
     {
         GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * tumble;
-        _Earth = GameObject.Find("Earth");
-        targetPos = _Earth.transform.position;
+        if(Earth._myEarth != null)
+            targetPos = Earth._myEarth.transform.position;
+
         Vector3 dir = targetPos - transform.position;
         StartCoroutine(Moving(dir));
     }
