@@ -135,7 +135,6 @@ GameObject:
   - component: {fileID: 307729933}
   - component: {fileID: 307729932}
   - component: {fileID: 307729931}
-  - component: {fileID: 307729930}
   m_Layer: 3
   m_Name: Moon
   m_TagString: Untagged
@@ -158,21 +157,6 @@ Transform:
   m_Father: {fileID: 654846887}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &307729930
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 307729928}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: eb3ae75dc70ba794c85b6d18dbc33d5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  rotSpeed: 10
-  _myEarth: {fileID: 0}
-  _effect: {fileID: 0}
 --- !u!135 &307729931
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -182,7 +166,7 @@ SphereCollider:
   m_GameObject: {fileID: 307729928}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   serializedVersion: 2
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
@@ -348,6 +332,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: eb3ae75dc70ba794c85b6d18dbc33d5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  crashMask:
+    serializedVersion: 2
+    m_Bits: 256
   rotSpeed: 10
   _myEarth: {fileID: 0}
   _effect: {fileID: 1892078723244562, guid: 46876a2780737ec45a19d62f88e5ce56, type: 3}
@@ -396,7 +383,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6f27ef489c145714f9f7af87a40ee451, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Spawning: 1
   enemyMask:
     serializedVersion: 2
     m_Bits: 255
@@ -404,9 +390,7 @@ MonoBehaviour:
   - {fileID: 151664, guid: fa49e460baf435b4780da7196c2ab473, type: 3}
   - {fileID: 141316, guid: 84cc3cd234dfc9d4d9d2e92c0eb0af75, type: 3}
   - {fileID: 130102, guid: 04d0bf4be9447154188d86f6e3b8dce9, type: 3}
-  spawn_Max_Distance: 20
-  spawn_Min_Distance: 15
-  spawn_Distance: 10
+  spawn_Distance: 15
   spawn_Turm_sec: 2
   _main_cam: {fileID: 1242181718}
 --- !u!4 &977231595
