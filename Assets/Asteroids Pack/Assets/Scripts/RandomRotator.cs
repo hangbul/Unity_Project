@@ -10,31 +10,31 @@ public class RandomRotator : MonoBehaviour
     private float tumble;
 
     public GameObject _effect;
-    
+    public Transform myTarget;
+
     private bool isQuitting = false;
     float Velocity = 0.2f;
-    Vector3 targetPos;
+
 
     void Start()
     {
         GetComponent<Rigidbody>().angularVelocity = Random.insideUnitSphere * tumble;
-        if(Earth._myEarth != null)
-            targetPos = Earth._myEarth.transform.position;
 
-        Vector3 dir = targetPos - transform.position;
+        myTarget = Earth.Instance._myEarth;
+
+        Vector3 dir = myTarget.position- transform.position;
         StartCoroutine(Moving(dir));
     }
     private void Update()
     {
-        transform.position = Vector3.Lerp(transform.position, targetPos, Velocity * Time.deltaTime);
+        if(myTarget!= null)
+            transform.position = Vector3.Lerp(transform.position, myTarget.position, Velocity * Time.deltaTime);
     }
 
     IEnumerator Moving(Vector3 dir)
     {
         float dist = dir.magnitude; //Vector3.Distance(pos, trasform.position);
         dir.Normalize();        // normalized
-
-
 
         while (dist > 0.0f)
         {
@@ -44,13 +44,14 @@ public class RandomRotator : MonoBehaviour
                 delta = dist;
 
             //transform.Translate(dir * delta * MoveSpeed, Space.World);
-            targetPos += dir * delta;
+            transform.position += dir * delta;
 
             dist -= delta;
 
 
             yield return null;
         }
+        Destroy(gameObject);
     }
     private void OnApplicationQuit()
     {

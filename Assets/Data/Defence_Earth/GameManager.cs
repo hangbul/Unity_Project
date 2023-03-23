@@ -41,7 +41,7 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (Earth._myEarth == null && Spawning)
+        if (Earth.Instance == null && Spawning)
         {
             Spawning = false;
         }

@@ -6,15 +6,20 @@ using UnityEngine;
 
 public class Earth : MonoBehaviour
 {
-    public static Earth _myEarth = null;
+    public LayerMask crashMask;
+    
+    public static Earth Instance = null;
     public float rotSpeed = 10.0f;
+
+    public Transform _myEarth = null;
     public GameObject _effect = null;
     
     private bool isQuitting = false;
 
-    private void Start()
+    private void Awake()
     {
-        _myEarth = this;
+        Instance = this;
+        _myEarth = transform;
     }
 
     // Update is called once per frame
@@ -32,13 +37,18 @@ public class Earth : MonoBehaviour
     {
         if (!isQuitting)
         {
-            GameObject obj = Instantiate(_effect, this.transform.position, Quaternion.identity); return;
+            
+            return;
         }
     }
-    void OnCollisionEnter (Collision other)
+    void OnTriggerEnter (Collider other)
     {
-        if (other.gameObject.CompareTag("Enemy") )
+        if (((1 << other.gameObject.layer) & crashMask) != 0) 
         {
+            GameObject obj = Instantiate(_effect, this.transform.position, Quaternion.identity);
+            obj.transform.SetParent(null);
+
+            Destroy(other.gameObject);
             Destroy(this.gameObject);
         }
     }
