@@ -5,11 +5,9 @@ using UnityEngine;
 public class GameManager : MonoBehaviour
 {
 
-    public bool Spawning = true;
     public LayerMask enemyMask;
 
     public GameObject[] Ori_Asteroid;
-    
 
     public float spawn_Max_Distance = 20.0f;
     public float spawn_Min_Distance = 15.0f;
@@ -25,8 +23,6 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
-        spawn_Distance = Mathf.Clamp(spawn_Distance * Mathf.Sin(Time.deltaTime* circle_num), spawn_Min_Distance, spawn_Max_Distance);
-
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = _main_cam.ScreenPointToRay(Input.mousePosition);
@@ -41,25 +37,35 @@ public class GameManager : MonoBehaviour
 
         }
 
-        if (Earth.Instance == null && Spawning)
-        {
-            Spawning = false;
-        }
-
 
 
     }
 
     IEnumerator Spawn_Asteroid()
     {
-        while (Spawning)
+        while (Earth.Instance != null)
         {
             int rnd = Random.Range(0, 3);
 
-            Vector3 _point = new Vector3(Mathf.Cos(Mathf.PI * Time.deltaTime * circle_num) , 0, Mathf.Sin(Mathf.PI * Time.deltaTime * circle_num) ) * spawn_Distance;
-            GameObject obj = Instantiate(Ori_Asteroid[rnd]);
-            obj.transform.position = _point;
-
+            //case 01
+            {
+                /*
+                Vector3 pos = Vector3.zero;
+                while (Mathf.Approximately(pos.magnitude, 0.0f))
+                {
+                    pos.x = Random.Range(-1.0f, 1.0f);
+                    pos.z = Random.Range(-1.0f, 1.0f);
+                }
+                Vector3 rnddir = (pos - Earth.Instance._myEarth.position).normalized;
+                pos = Earth.Instance._myEarth.position + rnddir * spawn_Distance;
+                GameObject obj = Instantiate(Ori_Asteroid[rnd], pos, Quaternion.identity);
+                 */
+            }
+            //case 02
+            {
+                Vector3 pos = new Vector3(Mathf.Cos(Mathf.PI * Time.deltaTime * circle_num), 0, Mathf.Sin(Mathf.PI * Time.deltaTime * circle_num)) * spawn_Distance;
+                GameObject obj = Instantiate(Ori_Asteroid[rnd], pos, Quaternion.identity);
+            }
             yield return new WaitForSeconds(spawn_Turm_sec);
         }
     }
