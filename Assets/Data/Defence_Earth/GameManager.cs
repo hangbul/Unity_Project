@@ -9,8 +9,6 @@ public class GameManager : MonoBehaviour
 
     public GameObject[] Ori_Asteroid;
 
-    public float spawn_Max_Distance = 20.0f;
-    public float spawn_Min_Distance = 15.0f;
     public float spawn_Distance = 20.0f;
     public float spawn_Turm_sec = 2.0f;    
 
@@ -47,7 +45,7 @@ public class GameManager : MonoBehaviour
         {
             int rnd = Random.Range(0, 3);
 
-            //case 01
+            //case 01 : ·£´ý ÁÂÇ¥
             {
                 /*
                 Vector3 pos = Vector3.zero;
@@ -61,9 +59,22 @@ public class GameManager : MonoBehaviour
                 GameObject obj = Instantiate(Ori_Asteroid[rnd], pos, Quaternion.identity);
                  */
             }
-            //case 02
+            //case 02 : »ï°¢ÇÔ¼ö
             {
+                /*
                 Vector3 pos = new Vector3(Mathf.Cos(Mathf.PI * Time.deltaTime * circle_num), 0, Mathf.Sin(Mathf.PI * Time.deltaTime * circle_num)) * spawn_Distance;
+                GameObject obj = Instantiate(Ori_Asteroid[rnd], pos, Quaternion.identity);
+                 */
+            }
+            //case 03 : ¹éÅÍ È¸Àü
+            {
+                Vector3 pos = Vector3.zero;
+                
+                Vector3 rnddir = new Vector3(0,0,1);
+                float angle = Random.Range(0.0f, 360.0f);
+                rnddir = Quaternion.Euler(0, angle, 0) * rnddir;
+
+                pos = Earth.Instance._myEarth.position + rnddir * spawn_Distance;
                 GameObject obj = Instantiate(Ori_Asteroid[rnd], pos, Quaternion.identity);
             }
             yield return new WaitForSeconds(spawn_Turm_sec);
