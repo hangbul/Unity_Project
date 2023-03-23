@@ -56,7 +56,6 @@ public class Tank_Control_Picking : MonoBehaviour
                     StopAllCoroutines();
 
                     StartCoroutine(Moving(dir));
-                    StartCoroutine(Rotating(dir));
 
                 }
             }
@@ -133,7 +132,7 @@ public class Tank_Control_Picking : MonoBehaviour
             dist -= delta;
 
 
-            yield return null;
+            yield return StartCoroutine(Rotating(dir));
         }
     }
     IEnumerator Rotating(Vector3 dir)
