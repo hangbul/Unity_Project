@@ -21,12 +21,11 @@ public class Picking : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, pickMask))
-            {                
+            if(Physics.Raycast(ray, out RaycastHit hit, 1000.0f, pickMask))
+            {
                 clickAction?.Invoke(hit.point);
             }
         }
-        
 
     }
 
