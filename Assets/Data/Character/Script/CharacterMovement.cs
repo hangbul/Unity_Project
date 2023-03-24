@@ -21,13 +21,17 @@ public class CharacterMovement : CharacterProperty
 
         while (dist > 0.0f)
         {
-            float delta = MoveSpeed * Time.deltaTime;
-            if (dist - delta < 0.0f)
+            if (!myAnim.GetBool("isAttacking"))
             {
-                delta = dist;
+
+                float delta = MoveSpeed * Time.deltaTime;
+                if (dist - delta < 0.0f)
+                {
+                    delta = dist;
+                }
+                dist -= delta;
+                transform.Translate(dir * delta, Space.World);
             }
-            dist -= delta;
-            transform.Translate(dir * delta, Space.World);
             yield return null;
         }
 

@@ -12,7 +12,14 @@ public class RpgPlayer : CharacterMovement
     // Update is called once per frame
     void Update()
     {
-
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            myAnim.SetTrigger("Attack");
+        }
+        if (Input.GetKeyDown(KeyCode.W))
+        {
+            myAnim.SetTrigger("Skill");
+        }
     }
 
     public void OnMove(Vector3 pos)

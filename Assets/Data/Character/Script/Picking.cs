@@ -8,7 +8,6 @@ public delegate void ClickAct(Vector3 pos);
 public class Picking : MonoBehaviour
 {
     public LayerMask pickMask;
-    public LayerMask enemyMask;
     public UnityEvent<Vector3> clickAction = null;
     // Start is called before the first frame update
     void Start()
@@ -22,19 +21,12 @@ public class Picking : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, pickMask))
-            {
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000f, pickMask))
+            {                
                 clickAction?.Invoke(hit.point);
             }
         }
-        if (Input.GetMouseButtonDown(1))
-        {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if (Physics.Raycast(ray, out RaycastHit hit, pickMask))
-            {
-                clickAction?.Invoke(hit.point);
-            }
-        }
+        
 
     }
 

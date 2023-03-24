@@ -9,7 +9,7 @@ public class PlayerProperty : MonoBehaviour
 
     Animator _anim = null;
 
-    protected Animator MyAnim
+    protected Animator myAnim
     {
         get
         {

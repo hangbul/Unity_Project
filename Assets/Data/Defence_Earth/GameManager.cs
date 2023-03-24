@@ -12,7 +12,6 @@ public class GameManager : MonoBehaviour
     public float spawn_Distance = 20.0f;
     public float spawn_Turm_sec = 2.0f;    
 
-    private float circle_num = 400.0f;
     public Camera _main_cam;
     void Start()
     {
