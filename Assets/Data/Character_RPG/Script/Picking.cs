@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 
-public delegate void ClickAct(Vector3 pos);
+//Event 사용시 미사용
+//public delegate void ClickAct(Vector3 pos);
 
 public class Picking : MonoBehaviour
 {
