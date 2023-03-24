@@ -1,15 +1,16 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CharacterMovement : CharacterProperty
 {
-    protected void MoveToPos(Vector3 pos)
+    protected void MoveToPos(Vector3 pos, UnityAction done = null)
     {
         StopAllCoroutines();
-        StartCoroutine(MovingToPos(pos));
+        StartCoroutine(MovingToPos(pos, done));
     }
-    IEnumerator MovingToPos(Vector3 pos)
+    IEnumerator MovingToPos(Vector3 pos, UnityAction done)
     {
         Vector3 dir = pos - transform.position;
         float dist = dir.magnitude;
@@ -36,6 +37,7 @@ public class CharacterMovement : CharacterProperty
         }
 
         myAnim.SetBool("isMoving", false);
+        done?.Invoke();
     }
 
     IEnumerator Rotating(Vector3 dir)

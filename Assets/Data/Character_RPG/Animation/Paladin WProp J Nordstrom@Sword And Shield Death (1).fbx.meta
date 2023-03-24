@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: c4df2c84cddcd08408f1324dada76848
+guid: 20ba421e0765d8e4485ada104f5777e5
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
@@ -33,11 +33,11 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: Sword And Shield Power Up
+      name: Sword And Shield Death_1
       takeName: mixamo.com
       internalID: -203655887218126122
       firstFrame: 0
-      lastFrame: 71
+      lastFrame: 117
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
