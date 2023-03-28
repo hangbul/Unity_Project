@@ -9,7 +9,9 @@ using UnityEngine.Events;
 public class Picking : MonoBehaviour
 {
     public LayerMask pickMask;
+    public LayerMask enemyMask;
     public UnityEvent<Vector3> clickAction = null;
+    public UnityEvent<Transform> attackAction = null;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,9 +24,15 @@ public class Picking : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-            if(Physics.Raycast(ray, out RaycastHit hit, 1000.0f, pickMask))
+            
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, pickMask | enemyMask))
             {
-                clickAction?.Invoke(hit.point);
+                if((1 << hit.transform.gameObject.layer & enemyMask )!=0)
+                {
+                    attackAction?.Invoke(hit.transform);
+                }
+
+                else clickAction?.Invoke(hit.point);
             }
         }
 

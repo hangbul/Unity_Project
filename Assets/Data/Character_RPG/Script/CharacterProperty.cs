@@ -6,6 +6,10 @@ public class CharacterProperty : MonoBehaviour
 {
     public float MoveSpeed = 2.0f;
     public float RotSpeed = 360.0f;
+    public float AttackRange = 1.0f;
+    public float AttackDelay = 1.0f;
+    public float health = 100.0f;
+    protected float playTime = 0.0f;
 
     Animator _anim = null;
     protected Animator myAnim

@@ -2,15 +2,21 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Monster : CharacterMovement
+
+
+public class Monster : CharacterMovement, IPerception, IBattle
 {
+ 
     public enum State
     {
-        Create, Normal, Battle
+        Create, Normal, Battle, Death
     }
+
+
 
     public State myState = State.Create;
     Vector3 orgPos;
+    public Transform myTarget = null;
 
     void ChangeState(State s)
     {
@@ -19,14 +25,19 @@ public class Monster : CharacterMovement
         switch (myState)
         {
             case State.Normal:
+                myAnim.SetBool("isMoving", false);
+                StopAllCoroutines();
                 StartCoroutine(Wadering(Random.Range(1.0f, 3.0f)));
                 break;
             case State.Battle:
                 StopAllCoroutines();
-
+                FollowTarget(myTarget);
+                break;
+            case State.Death:
+                StopAllCoroutines();
                 break;
             default:
-                Debug.Log("비 처리 상태 등장!");
+                Debug.Log("처리 되지 않는 상태 입니다.");
                 break;
 
         }
@@ -37,8 +48,15 @@ public class Monster : CharacterMovement
         switch (myState)
         {
             case State.Normal:
+                if (health < 0.0f)
+                    StartCoroutine(Death());
                 break;
             case State.Battle:
+                if (health < 0.0f)
+                    StartCoroutine(Death());
+                break;
+            case State.Death:
+                this.transform.GetComponent<Monster>().enabled = false;
                 break;
             default:
                 Debug.Log("비 처리 상태 등장!");
@@ -69,5 +87,34 @@ public class Monster : CharacterMovement
         pos.z += Random.Range(-5.0f, 5.0f);
         MoveToPos(pos, () => StartCoroutine(Wadering(Random.Range(1.0f, 3.0f))));
 
+    }
+    IEnumerator Death()
+    {
+        myAnim.SetTrigger("Death");
+        yield return new WaitForSeconds(1.0f);
+        ChangeState(State.Death);
+
+    }
+    //Interface 함수는 무조건 public 변형
+    public void Find(Transform target)
+    {
+        myTarget = target;
+        ChangeState(State.Battle);
+    }
+
+    public void LostTarget()
+    {
+        myTarget = null;
+        ChangeState(State.Normal);
+    }
+    //인터페이스 사용시 커플링 방해 가능
+    public void OnAttack()
+    {
+        myTarget.GetComponent<IBattle>()?.OnDamage(35.0f);
+    }
+    public void OnDamage(float dmg)
+    {
+        health -= dmg;
+        myAnim.SetTrigger("Damage");
     }
 }

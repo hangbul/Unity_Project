@@ -2,16 +2,39 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+
+public interface IPerception
+{
+    void Find(Transform target);
+    void LostTarget();
+}
+
+
 public class AIPerception : MonoBehaviour
 {
     public LayerMask enemyMask;
     public List<Transform> myEnemylist = new List<Transform>();
+    IPerception myParent = null;
+    Transform myTarget = null;
+    private void Start()
+    {
+        myParent = transform.parent.GetComponent<IPerception>();
+    }
 
     private void OnTriggerEnter(Collider other)
     {
         if ((enemyMask & 1 << other.gameObject.layer) != 0)
         {
-            myEnemylist.Add(other.transform);
+            if (!myEnemylist.Contains(other.transform))
+            {
+                myEnemylist.Add(other.transform);
+            }
+            if (myTarget == null)
+            {
+                myTarget = other.transform;
+                myParent.Find(myTarget);
+            }
+
         }
     }
 
@@ -23,6 +46,15 @@ public class AIPerception : MonoBehaviour
             {
                 myEnemylist.Remove(other.transform);
             }
+
+            if (myTarget == other.transform)
+            {
+                myTarget = null;
+                myParent.LostTarget();
+            }
         }
+
     }
+    
+
 }
