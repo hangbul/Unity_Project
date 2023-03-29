@@ -30,7 +30,20 @@ public class RpgPlayer : CharacterMovement, IBattle
     public void OnDamage(float dmg)
     {
         _curHP -= dmg;
-        myAnim.SetTrigger("Damage");
+        if (Mathf.Approximately(curHP, 0.0f))
+        {
+            Collider[] list = transform.GetComponentsInChildren<Collider>();
+            foreach(var col in list)
+            {
+                col.enabled = false;
+            }
+            DeathAlarm?.Invoke();
+            myAnim.SetTrigger("Death");
+        }
+        else
+        {
+            myAnim.SetTrigger("Damage");
+        }
     }
     public void OnAttack()
     {
@@ -38,6 +51,10 @@ public class RpgPlayer : CharacterMovement, IBattle
     }
     public void BeginBattle(Transform target)
     {
+        if(myTarget != null)
+        {
+            myTarget.GetComponent<CharacterProperty>().DeathAlarm -= TargetDead;
+        }
         myTarget = target;
         FollowTarget(myTarget);
         myTarget.GetComponent<CharacterProperty>().DeathAlarm += TargetDead;

@@ -95,6 +95,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
     public void Find(Transform target)
     {
         myTarget = target;
+        myTarget.GetComponent<CharacterProperty>().DeathAlarm += () => ChangeState(State.Normal);
         ChangeState(State.Battle);
     }
 
@@ -106,7 +107,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
     //인터페이스 사용시 커플링 방해 가능
     public void OnAttack()
     {
-        myTarget.GetComponent<IBattle>()?.OnDamage(35.0f);
+        myTarget.GetComponent<IBattle>()?.OnDamage(AttackPoint);
     }
     public void OnDamage(float dmg)
     {
