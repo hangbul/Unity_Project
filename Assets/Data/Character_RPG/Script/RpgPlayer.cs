@@ -17,6 +17,10 @@ public class RpgPlayer : CharacterMovement, IBattle
             myAnim.SetTrigger("Skill");
         }
     }
+    public bool IsLive
+    {
+        get;
+    }
 
     public void OnMove(Vector3 pos)
     {
@@ -25,8 +29,7 @@ public class RpgPlayer : CharacterMovement, IBattle
     
     public void OnDamage(float dmg)
     {
-        health -= dmg;
-        myAnim.SetFloat("Health", health);
+        _curHP -= dmg;
         myAnim.SetTrigger("Damage");
     }
     public void OnAttack()

@@ -7,7 +7,6 @@ public class CharacterMovement : CharacterProperty
 {
     protected void MoveToPos(Vector3 pos, UnityAction done = null)
     {
-        
         StopAllCoroutines();
         StartCoroutine(MovingToPos(pos, done));
     }
@@ -69,6 +68,11 @@ public class CharacterMovement : CharacterProperty
     {
         while (target != null)
         {
+            if(target.GetComponent<IBattle>() != null)
+            {
+                if (!target.GetComponent<IBattle>().IsLive) yield break;
+            }
+
             if (!myAnim.GetBool("isAttacking")) playTime += Time.deltaTime;
             if (!myAnim.GetBool("isAttacking"))
             {

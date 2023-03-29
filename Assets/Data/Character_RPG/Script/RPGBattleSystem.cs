@@ -5,6 +5,11 @@ using UnityEngine;
 interface IBattle
 {
     void OnDamage(float dmg);
+    
+    bool IsLive
+    {
+        get;
+    }
 }
 
 public class RPGBattleSystem : MonoBehaviour

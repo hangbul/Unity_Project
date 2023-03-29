@@ -18,6 +18,11 @@ public class Monster : CharacterMovement, IPerception, IBattle
     Vector3 orgPos;
     public Transform myTarget = null;
 
+    public bool IsLive
+    {
+        get => myState != State.Death;
+    }
+
     void ChangeState(State s)
     {
         if (myState == s) return;
@@ -35,6 +40,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
                 break;
             case State.Death:
                 StopAllCoroutines();
+                myAnim.SetTrigger("Death");
                 break;
             default:
                 Debug.Log("처리 되지 않는 상태 입니다.");
@@ -48,12 +54,8 @@ public class Monster : CharacterMovement, IPerception, IBattle
         switch (myState)
         {
             case State.Normal:
-                if (health < 0.0f)
-                    StartCoroutine(Death());
                 break;
             case State.Battle:
-                if (health < 0.0f)
-                    StartCoroutine(Death());
                 break;
             case State.Death:
                 this.transform.GetComponent<Monster>().enabled = false;
@@ -88,13 +90,6 @@ public class Monster : CharacterMovement, IPerception, IBattle
         MoveToPos(pos, () => StartCoroutine(Wadering(Random.Range(1.0f, 3.0f))));
 
     }
-    IEnumerator Death()
-    {
-        myAnim.SetTrigger("Death");
-        yield return new WaitForSeconds(1.0f);
-        ChangeState(State.Death);
-
-    }
     //Interface 함수는 무조건 public 변형
     public void Find(Transform target)
     {
@@ -114,7 +109,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
     }
     public void OnDamage(float dmg)
     {
-        health -= dmg;
+        _curHP -= dmg;
         myAnim.SetTrigger("Damage");
     }
 }
