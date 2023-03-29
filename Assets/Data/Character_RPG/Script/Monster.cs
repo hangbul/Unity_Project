@@ -39,9 +39,15 @@ public class Monster : CharacterMovement, IPerception, IBattle
                 FollowTarget(myTarget);
                 break;
             case State.Death:
+                Collider[] list = transform.GetComponentsInChildren<Collider>();
+                foreach (var col in list)
+                {
+                    col.enabled = false;
+                }
                 DeathAlarm?.Invoke();
                 StopAllCoroutines();
                 myAnim.SetTrigger("Death");
+                StartCoroutine(DeadProtocol());
                 break;
             default:
                 Debug.Log("처리 되지 않는 상태 입니다.");
@@ -59,7 +65,6 @@ public class Monster : CharacterMovement, IPerception, IBattle
             case State.Battle:
                 break;
             case State.Death:
-                //this.transform.GetComponent<Monster>().enabled = false;
                 break;
             default:
                 Debug.Log("비 처리 상태 등장!");
@@ -81,7 +86,23 @@ public class Monster : CharacterMovement, IPerception, IBattle
     {
         StateProcess();
     }
+    IEnumerator DeadProtocol()
+    {
+        yield return new WaitForSeconds(4.0f);
 
+        float dist = 1.0f;
+        while (dist > 0.0f) {
+            float delta = Time.deltaTime * 0.4f;
+            if (dist - delta < 0.0f)
+            {
+                delta = dist;
+            }
+            dist -= delta;
+            transform.Translate(Vector3.down * delta, Space.World);
+            yield return null ;
+        }
+        Destroy(this.transform.gameObject);
+    }
     IEnumerator Wadering(float delay)
     {
         yield return new WaitForSeconds(delay);
@@ -95,7 +116,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
     public void Find(Transform target)
     {
         myTarget = target;
-        myTarget.GetComponent<CharacterProperty>().DeathAlarm += () => ChangeState(State.Normal);
+        myTarget.GetComponent<CharacterProperty>().DeathAlarm += () => { if (IsLive) ChangeState(State.Normal); };
         ChangeState(State.Battle);
     }
 
@@ -107,12 +128,13 @@ public class Monster : CharacterMovement, IPerception, IBattle
     //인터페이스 사용시 커플링 방해 가능
     public void OnAttack()
     {
-        myTarget.GetComponent<IBattle>()?.OnDamage(AttackPoint);
+        if(IsLive)
+            myTarget.GetComponent<IBattle>()?.OnDamage(AttackPoint);
     }
     public void OnDamage(float dmg)
     {
-        _curHP -= dmg;
-        if (Mathf.Approximately(_curHP, 0.0f))
+        curHP -= dmg;
+        if (Mathf.Approximately(curHP, 0.0f))
             ChangeState(State.Death);
         myAnim.SetTrigger("Damage");
     }

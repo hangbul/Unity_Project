@@ -19,17 +19,21 @@ public class RpgPlayer : CharacterMovement, IBattle
     }
     public bool IsLive
     {
-        get;
+        get => !Mathf.Approximately(curHP, 0.0f);
     }
 
     public void OnMove(Vector3 pos)
     {
-        MoveToPos(pos);
+        if(IsLive)
+            MoveToPos(pos);
     }
     
     public void OnDamage(float dmg)
     {
-        _curHP -= dmg;
+        if (!IsLive)
+            return;
+        
+        curHP -= dmg;
         if (Mathf.Approximately(curHP, 0.0f))
         {
             Collider[] list = transform.GetComponentsInChildren<Collider>();
@@ -47,11 +51,14 @@ public class RpgPlayer : CharacterMovement, IBattle
     }
     public void OnAttack()
     {
-        myTarget.GetComponent<IBattle>()?.OnDamage(35.0f);
+        if (IsLive)
+            myTarget.GetComponent<IBattle>()?.OnDamage(AttackPoint);
     }
     public void BeginBattle(Transform target)
     {
-        if(myTarget != null)
+        if (!IsLive)
+            return;
+        if (myTarget != null)
         {
             myTarget.GetComponent<CharacterProperty>().DeathAlarm -= TargetDead;
         }

@@ -1303,7 +1303,9 @@ MonoBehaviour:
   RotSpeed: 360
   AttackRange: 1
   AttackDelay: 1
-  health: 100
+  AttackPoint: 35
+  MaxHP: 30
+  _curHP: -100
   myState: 0
   myTarget: {fileID: 0}
 --- !u!54 &559195177
@@ -1651,7 +1653,9 @@ MonoBehaviour:
   RotSpeed: 360
   AttackRange: 1
   AttackDelay: 1
-  health: 1000
+  AttackPoint: 35
+  MaxHP: 100
+  _curHP: -100
 --- !u!54 &956350355
 Rigidbody:
   m_ObjectHideFlags: 0
