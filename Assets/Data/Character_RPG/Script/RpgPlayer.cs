@@ -40,5 +40,12 @@ public class RpgPlayer : CharacterMovement, IBattle
     {
         myTarget = target;
         FollowTarget(myTarget);
+        myTarget.GetComponent<CharacterProperty>().DeathAlarm += TargetDead;
+    }
+
+    void TargetDead()
+    {
+        myTarget = null;
+        StopAllCoroutines();
     }
 }

@@ -39,6 +39,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
                 FollowTarget(myTarget);
                 break;
             case State.Death:
+                DeathAlarm?.Invoke();
                 StopAllCoroutines();
                 myAnim.SetTrigger("Death");
                 break;
@@ -58,7 +59,7 @@ public class Monster : CharacterMovement, IPerception, IBattle
             case State.Battle:
                 break;
             case State.Death:
-                this.transform.GetComponent<Monster>().enabled = false;
+                //this.transform.GetComponent<Monster>().enabled = false;
                 break;
             default:
                 Debug.Log("비 처리 상태 등장!");
@@ -110,6 +111,8 @@ public class Monster : CharacterMovement, IPerception, IBattle
     public void OnDamage(float dmg)
     {
         _curHP -= dmg;
+        if (Mathf.Approximately(_curHP, 0.0f))
+            ChangeState(State.Death);
         myAnim.SetTrigger("Damage");
     }
 }
