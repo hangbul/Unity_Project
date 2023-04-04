@@ -10,7 +10,9 @@ public class Picking : MonoBehaviour
 {
     public LayerMask pickMask;
     public LayerMask enemyMask;
-    public UnityEvent<Vector3> clickAction = null;
+    public UnityEvent<Vector3> LeftClickAction = null;
+    public UnityEvent<Vector3> RightClickAction = null;
+
     public UnityEvent<Transform> attackAction = null;
     // Start is called before the first frame update
     void Start()
@@ -32,10 +34,18 @@ public class Picking : MonoBehaviour
                     attackAction?.Invoke(hit.transform);
                 }
 
-                else clickAction?.Invoke(hit.point);
+                else LeftClickAction?.Invoke(hit.point);
             }
         }
+        else if (Input.GetMouseButtonDown(1))
+        {
+            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
+            if (Physics.Raycast(ray, out RaycastHit hit, 1000.0f, pickMask ))
+            {
+                RightClickAction?.Invoke(hit.point);
+            }
+        }
     }
 
 }
