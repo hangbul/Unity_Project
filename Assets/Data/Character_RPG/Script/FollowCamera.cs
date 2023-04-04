@@ -61,7 +61,8 @@ public class FollowCamera : MonoBehaviour
         if (Physics.Raycast(new Ray(myTarget.position, target_dir), out RaycastHit hit, Dist + radius, crashMask))
         {
             //transform.position = hit.point + -target_dir * radius;
-            Dist = hit.distance - radius;
+            if ((1 << hit.transform.gameObject.layer & crashMask) != 0)
+                Dist = hit.distance - radius;
         }
         //transform.position = myTarget.position + target_dir * Dist;
         transform.position = myTarget.position + target_dir * Dist;
