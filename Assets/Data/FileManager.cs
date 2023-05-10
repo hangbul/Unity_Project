@@ -40,4 +40,37 @@ public class FileManager : MonoBehaviour
         }
         return data;
     }
+    public static void SaveBinaryArray<T>(string filePath, T[] Datas)
+    {
+        using(FileStream fs = File.Create(filePath))
+        {
+            BinaryFormatter format = new BinaryFormatter();
+            format.Serialize(fs, Datas.Length);
+            foreach(T data in Datas)
+            {
+                format.Serialize(fs, data);
+            }
+
+            fs.Close();
+        }
+    }
+    public static T[] LoadBinaryArray<T>(string filePath)
+    {
+        T[] datas = default;
+        if (File.Exists(filePath))
+        {
+            using (FileStream fs = File.Open(filePath, FileMode.Open))
+            {
+                BinaryFormatter format = new BinaryFormatter();
+                int Count = (int)format.Deserialize(fs);
+                datas = new T[Count];
+                for(int i=0;i<Count;i++)
+                    datas[i] = (T)format.Deserialize(fs);
+
+                fs.Close();
+            }
+        }
+        return datas;
+    }
+
 }
