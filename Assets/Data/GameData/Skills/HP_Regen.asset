@@ -1,0 +1,19 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 497e8930c8fb71a42a62a459b8490d01, type: 3}
+  m_Name: HP_Regen
+  m_EditorClassIdentifier: 
+  myType: 0
+  <Content>k__BackingField: "\uB9E4 \uCD08 10\uC758 HP \uC7AC\uC0DD"
+  Code: 1001
+  Value1: 1
+  Value2: 10
