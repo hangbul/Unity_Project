@@ -28,6 +28,7 @@ public class StudyData : MonoBehaviour
 {
     public PlayerData myData;
     public PlayerData myLoadData;
+    public PlayerData[] myLoadDatas;
 
     public ITEM[] itemList;
     string myText;
