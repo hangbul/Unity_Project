@@ -68,7 +68,8 @@ public class Tank_Control_Picking : MonoBehaviour
         {
             _bomb.OnFire();
             _bomb = null;
-            GameObject obj = Instantiate(orgBomb, _point[count]);
+            //GameObject obj = Instantiate(orgBomb, _point[count]);
+            //GameObject obj = ObjectPool<Bomb>.Inst.GetObject(orgBomb, _point[count].position, _point[count].rotation, _point[count]);
             obj.transform.localPosition = Vector3.zero;
             obj.transform.localRotation = _point[count].localRotation; ;
             _bomb = obj.GetComponent<Bomb>();

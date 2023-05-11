@@ -180,11 +180,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 842bc65c130b06f47855499b376a9309, type: 3}
---- !u!20 &572836506 stripped
-Camera:
-  m_CorrespondingSourceObject: {fileID: 572836506, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-  m_PrefabInstance: {fileID: 4133644430967959318}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -581,14 +576,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 572836504, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 36.170002
-      objectReference: {fileID: 0}
-    - target: {fileID: 572836504, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 4133644428854337713, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
       propertyPath: m_Name
       value: Tank02
@@ -636,50 +623,6 @@ PrefabInstance:
     - target: {fileID: 4133644428854337724, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4133644428854337726, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4133644428854337726, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: m_IsKinematic
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4133644430347874492, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.49
-      objectReference: {fileID: 0}
-    - target: {fileID: 4133644430347874492, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: -0
-      objectReference: {fileID: 0}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: point
-      value: 
-      objectReference: {fileID: 733350031668243267, guid: 06b5282e9c87d3242b2301b7a566764c, type: 3}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: main_cam
-      value: 
-      objectReference: {fileID: 572836506}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: RotVelocity
-      value: 150
-      objectReference: {fileID: 0}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: RotateSpeed
-      value: 360
-      objectReference: {fileID: 0}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: Fire_Delay_time
-      value: 0.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: pickMask.m_Bits
-      value: 128
-      objectReference: {fileID: 0}
-    - target: {fileID: 9123638506104388550, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}
-      propertyPath: enemyMask.m_Bits
-      value: 256
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: aab65d5295d81b940a662f1ad0f6dc40, type: 3}

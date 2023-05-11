@@ -7,10 +7,11 @@ public class Bomb : MonoBehaviour
     public bool isFire = false, isQuitting = false;
     public List<GameObject> target;
     public GameObject _effect;
-
+    float movedDistance;
     public float life_time = 5.0f;
     float speed = 10.0f;
-    Vector3 hit_point;
+    public LayerMask layermask;
+
     void Start()
     {
         this.isFire = false;
@@ -36,20 +37,24 @@ public class Bomb : MonoBehaviour
         if (isFire)
         {
             float delta = speed * Time.deltaTime;
-
+            movedDistance += delta;
+            if (movedDistance > 1000.0f)
+            {
+                //Destroy(this.gameObject);
+                ObjectPool.Inst.ReleaseObject(this.gameObject);
+                isFire = false;
+            }
             Ray ray = new Ray();
 
             ray.origin = transform.position;
             ray.direction = transform.forward;
-            if( Physics.Raycast(ray, out RaycastHit hit, delta))
+            if( Physics.Raycast(ray, out RaycastHit hit, delta, layermask))
             {
                 DestroyObject(hit.transform.gameObject);
             }
                 
             this.transform.Translate(Vector3.forward * delta);
             life_time -= Time.deltaTime;
-            if (life_time < 0)
-                Destroy(this.gameObject);
         }
 
         
