@@ -41,6 +41,7 @@ public class Bomb : MonoBehaviour
             if (movedDistance > 1000.0f)
             {
                 //Destroy(this.gameObject);
+                //
                 //ObjectPool.Inst.ReleaseObject(this.gameObject);
                 isFire = false;
             }
