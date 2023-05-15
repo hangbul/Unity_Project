@@ -8,12 +8,16 @@ public class TriAngle : MonoBehaviour
 
     void Start()
     {
-        Vector3[] vertexBuffer = new Vector3[8];
-        vertexBuffer[0] = new Vector3(-0.5f, 0.5f, -0.5f);
-        vertexBuffer[1] = new Vector3(0.5f, 0.5f, -0.5f);
-        vertexBuffer[2] = new Vector3(0.5f, -0.5f, -0.5f);
-        vertexBuffer[3] = new Vector3(-0.5f, -0.5f, -0.5f);
-        vertexBuffer[4] = vertexBuffer[5] = vertexBuffer[6] = vertexBuffer[7] = new Vector3(0, 0, 0.5f);
+        Vector3[] vertexBuffer = new Vector3[16];
+
+        vertexBuffer[0] = vertexBuffer[6] = vertexBuffer[14] = new Vector3(-0.5f, -0.5f, 0.5f);
+        vertexBuffer[1] = vertexBuffer[5] = vertexBuffer[9] = new Vector3(0.5f, -0.5f, 0.5f);
+        vertexBuffer[2] = vertexBuffer[8] = vertexBuffer[12] = new Vector3(0.5f, -0.5f, -0.5f);
+        vertexBuffer[3] = vertexBuffer[11] = vertexBuffer[15] = new Vector3(-0.5f, -0.5f, -0.5f);
+        
+        
+        
+        vertexBuffer[4] = vertexBuffer[7] = vertexBuffer[10] = vertexBuffer[13] = new Vector3(0, 0, 0);
 
         Vector2[] uvList = new Vector2[8];
         uvList[0] = new Vector2(0.25f, 0.75f);
@@ -28,28 +32,28 @@ public class TriAngle : MonoBehaviour
         int[] indexBuffer = new int[18];
 
         indexBuffer[0] = 0;
-        indexBuffer[1] = 2;
-        indexBuffer[2] = 3;
+        indexBuffer[1] = 3;
+        indexBuffer[2] = 2;
         
         indexBuffer[3] = 0;
-        indexBuffer[4] = 1;
-        indexBuffer[5] = 2;
+        indexBuffer[4] = 2;
+        indexBuffer[5] = 1;
 
         indexBuffer[6] = 4;
-        indexBuffer[7] = 1;
-        indexBuffer[8] = 0;
+        indexBuffer[7] = 6;
+        indexBuffer[8] = 5;
 
-        indexBuffer[9] = 5;
-        indexBuffer[10] = 2;
-        indexBuffer[11] = 1;
+        indexBuffer[9] = 7;
+        indexBuffer[10] = 9;
+        indexBuffer[11] = 8;
 
-        indexBuffer[12] = 6;
-        indexBuffer[13] = 3;
-        indexBuffer[14] = 2;
+        indexBuffer[12] = 10;
+        indexBuffer[13] = 12;
+        indexBuffer[14] = 11;
 
-        indexBuffer[15] = 7;
-        indexBuffer[16] = 0;
-        indexBuffer[17] = 3;
+        indexBuffer[15] = 13;
+        indexBuffer[16] = 15;
+        indexBuffer[17] = 14;
 
 
         
@@ -59,7 +63,7 @@ public class TriAngle : MonoBehaviour
         mesh.triangles = indexBuffer;      // indexBuffer
         mesh.uv = uvList;
 
-        Vector3[] normalList = new Vector3[8];
+        Vector3[] normalList = new Vector3[16];
 
         for(int i=0; i<indexBuffer.Length;i+= 3)
         {
