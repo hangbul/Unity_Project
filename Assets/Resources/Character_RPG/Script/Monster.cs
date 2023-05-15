@@ -85,8 +85,8 @@ public class Monster : CharacterMovement, IPerception, IBattle
         orgPos = transform.position;
         ChangeState(State.Normal);
 
-        MiniMapIcon icon = (Instantiate(Resources.Load("UI/MiniMapIcon"), SceneData.Inst.miniMap) as GameObject).GetComponent<MiniMapIcon>();
-        icon.Initialize(transform, Color.red);
+        //MiniMapIcon icon = (Instantiate(Resources.Load("UI/MiniMapIcon"), SceneData.Inst.miniMap) as GameObject).GetComponent<MiniMapIcon>();
+        //icon.Initialize(transform, Color.red);
     }
 
     void Update()
