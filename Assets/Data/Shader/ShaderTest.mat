@@ -8,7 +8,7 @@ Material:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_Name: ShaderTest
-  m_Shader: {fileID: 4800000, guid: 35dd40bd01453604cac04d586f4ddfaa, type: 3}
+  m_Shader: {fileID: 4800000, guid: 581b6bbe03a078e429c97ad66af26485, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords:
   - _ALPHAPREMULTIPLY_ON
@@ -17,7 +17,7 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
-  m_CustomRenderQueue: -1
+  m_CustomRenderQueue: 2001
   stringTagMap: {}
   disabledShaderPasses: []
   m_SavedProperties:
@@ -110,7 +110,7 @@ Material:
     - _UseSP: 0
     - _ZWrite: 0
     m_Colors:
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.7169812, g: 0.28746888, b: 0.28746888, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _TintColor: {r: 0.5, g: 0.5, b: 0.5, a: 0.5}
   m_BuildTextureStacks: []
